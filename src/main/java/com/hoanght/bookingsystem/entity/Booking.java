@@ -1,6 +1,6 @@
 package com.hoanght.bookingsystem.entity;
 
-import com.hoanght.bookingsystem.common.Status;
+import com.hoanght.bookingsystem.common.BookingStatus;
 import com.hoanght.bookingsystem.entity.audit.UserDateAudit;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -18,21 +18,22 @@ public class Booking extends UserDateAudit {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "guest_info_id")
-    private GuestInfo guestInfo;
+    @Column(name = "check_in_date", nullable = false)
+    private LocalDateTime checkInDate;
 
-    @ManyToOne
-    @JoinColumn(name = "room_id")
-    private Room room;
-
-    @Column(name = "check_in")
-    private LocalDateTime checkIn;
-
-    @Column(name = "check_out")
-    private LocalDateTime checkOut;
+    @Column(name = "check_out_date", nullable = false)
+    private LocalDateTime checkOutDate;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private Status status = Status.WAITING;
+    @Column(name = "status", nullable = false)
+    private BookingStatus status = BookingStatus.PENDING;
+
+    @ManyToOne
+    @JoinColumn(name = "room_id", nullable = false)
+    private Room room;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
+
 }

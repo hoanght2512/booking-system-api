@@ -1,12 +1,15 @@
 package com.hoanght.bookingsystem.entity;
 
+import com.hoanght.bookingsystem.common.RoomType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,12 +21,18 @@ public class Room {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "hotel_id")
-    private Hotel hotel;
+    @Column(name = "code", nullable = false)
+    private String code;
 
     @Column(name = "name", nullable = false)
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type", nullable = false)
+    private RoomType type;
+
+    @Column(name = "capacity", nullable = false)
+    private Integer capacity;
 
     @Column(name = "thumbnail")
     private String thumbnail;
@@ -38,4 +47,11 @@ public class Room {
 
     @Column(name = "price", nullable = false)
     private BigDecimal price;
+
+    @Column(name = "available", nullable = false)
+    private boolean available;
+
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Booking> bookings = new LinkedHashSet<>();
+
 }
