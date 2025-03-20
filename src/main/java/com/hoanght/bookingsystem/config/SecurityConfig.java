@@ -31,7 +31,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(12);
     }
 
     @Bean
@@ -49,8 +49,10 @@ public class SecurityConfig {
         http.httpBasic(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests(req -> req
                 .requestMatchers("/api/v1/auth/**").permitAll()
-                .requestMatchers("/api/v1/rooms/available").permitAll()
                 .requestMatchers("/api/v1/bookings").permitAll()
+                .requestMatchers("/api/v1/rooms/available", "/api/v1/images/**").permitAll()
+                .requestMatchers("/api/v1/users/**").hasAnyAuthority("ROLE_ADMIN")
+                .requestMatchers("/api/v1/rooms/**", "/api/v1/upload").hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER")
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .anyRequest().authenticated());
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

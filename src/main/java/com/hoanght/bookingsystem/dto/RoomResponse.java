@@ -1,20 +1,21 @@
 package com.hoanght.bookingsystem.dto;
 
-import com.hoanght.bookingsystem.common.RoomType;
-import lombok.Value;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Value
+@Data
+@NoArgsConstructor
 public class RoomResponse {
-    String code;
-    String name;
-    RoomType type;
-    Integer capacity;
-    String thumbnail;
-    List<String> images;
-    String description;
-    BigDecimal price;
-    boolean available;
+    private String code;
+    private String name;
+    private String type;
+    private Integer capacity;
+    private String thumbnail;
+    private List<String> images;
+    private String description;
+    private BigDecimal price;
+    private boolean available;
 }

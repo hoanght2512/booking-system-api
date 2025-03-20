@@ -21,10 +21,10 @@ public class Room {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "code", nullable = false)
+    @Column(name = "code", nullable = false, unique = true)
     private String code;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @Enumerated(EnumType.STRING)
@@ -49,7 +49,7 @@ public class Room {
     private BigDecimal price;
 
     @Column(name = "available", nullable = false)
-    private boolean available;
+    private boolean available = false;
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Booking> bookings = new LinkedHashSet<>();
